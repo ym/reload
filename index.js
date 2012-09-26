@@ -72,7 +72,7 @@ function run() {
 
 	running = true;
 
-	watch.watchTree(path, function (f, curr, prev) {
+	watch.watchTree(watchPath, function (f, curr, prev) {
 		if (typeof f == "object" && prev === null && curr === null) {
 		} else if (prev === null) {
 			processChange(f, 'create');
