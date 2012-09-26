@@ -6,7 +6,7 @@ var server = undefined,
     excludes = [],
     watchPath = '',
     runProgram = '',
-    running = true,
+    running = false,
     runArgument = [];
 
 function log(message) {
@@ -69,6 +69,8 @@ function run() {
 		throw new Error("You can't call autoreload.run twice.");
 		return false;
 	}
+
+	running = true;
 
 	watch.watchTree(path, function (f, curr, prev) {
 		if (typeof f == "object" && prev === null && curr === null) {
