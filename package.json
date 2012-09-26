@@ -1,0 +1,29 @@
+{
+  "name": "reload2",
+  "version": "0.1.0",
+  "description": "Reload if changes detected.",
+  "keywords": [
+    "reload"
+  ],
+  "author": {
+    "name": "Aveline Swan",
+    "email": "reload@vii.im",
+    "url": "http://vii.im/"
+  },
+  "main": "lib",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ym/reload.git"
+  },
+  "bugs": {
+    "email": "reload@vii.im",
+    "url": "https://github.com/ym/reload/issues"
+  },
+  "engines": {
+    "node": ">=0.6.18"
+  },
+  "dependencies": {
+    "cli-color": ">=0.2.0",
+    "watch":     ">=0.5.1"
+  }
+}
