@@ -15,7 +15,7 @@ function log(message) {
 
 function restartServer() {
 	if(server == undefined) {
-		server = spawn('node', ['app']);
+		server = spawn(runProgram, runArgument);
 
 		server.stdout.on('data', function (data) {
 			log((data + '').trim());
@@ -40,12 +40,12 @@ function restartServer() {
 }
 
 function processChange(file, type) {
-	if(excludes.length>0) {
+	if(excludes.length > 1) {
 		for (var i = excludes.length - 1; i >= 0; i--) {
 			if(file.match(excludes[i])) {
+				log(color.cyan('File "' + file + '" excluded by rule "' + excludes[i] + '".'));
 				return ;
 			}
-		};
 	}
 
 	switch(type) {
@@ -88,7 +88,7 @@ function run() {
 }
 
 exports.exclude = function(expr) {
-	if(excludes.indexOf(expr)) {
+	if(excludes.indexOf(expr) !== -1) {
 		return false;
 	}
 
