@@ -46,6 +46,7 @@ function processChange(file, type) {
 				log(color.cyan('File "' + file + '" excluded by rule "' + excludes[i] + '".'));
 				return ;
 			}
+		}
 	}
 
 	switch(type) {
