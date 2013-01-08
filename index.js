@@ -4,7 +4,7 @@ var watch = require('watch'),
 
 var server = undefined,
     excludes = [],
-    watchPath = '',
+    watchPath = [],
     runProgram = '',
     running = false,
     runArgument = [];
@@ -73,16 +73,26 @@ function run() {
 
 	running = true;
 
-	watch.watchTree(watchPath, function (f, curr, prev) {
-		if (typeof f == "object" && prev === null && curr === null) {
-		} else if (prev === null) {
-			processChange(f, 'create');
-		} else if (curr.nlink === 0) {
-			processChange(f, 'remove');
-		} else {
-			processChange(f, 'change');
+	_watchCallback = function (watchPath) {
+		return function (f, curr, prev) {
+			if (typeof f == "object" && prev === null && curr === null) {
+			} else if (prev === null) {
+				processChange(f, 'create');
+			} else if (curr.nlink === 0) {
+				processChange(f, 'remove');
+			} else {
+				processChange(f, 'change');
+			}
+		};
+	}
+
+	if(watchPath.length > 1) {
+		for (var i = watchPath.length - 1; i >= 0; i--) {
+			watch.watchTree(watchPath[i], _watchCallback(watchPath[i]));
 		}
-	});
+	}
+
+	
 
 	log(color.cyan('Starting Server ...'));
 	restartServer();
@@ -103,8 +113,12 @@ exports.setServer = function(prog, args) {
 	return true;
 }
 
-exports.setPath = function(path) {
-	watchPath = path;
+exports.watch = function(path) {
+	if(watchPath.indexOf(path) !== -1) {
+		return false;
+	}
+
+	watchPath.push(path);
 	return true;
 }
 
